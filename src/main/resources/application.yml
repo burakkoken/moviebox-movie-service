@@ -1,7 +1,18 @@
 spring:
   application:
     name: moviebox-movie-service
-
+  datasource:
+    url: jdbc:postgresql://ec2-174-129-33-27.compute-1.amazonaws.com/du8u4qiir2urk
+    username: lbcstanzejxlkw
+    password: b00fe4fff79994d78f3b4de1220bfe8c4ca64172a126ba8d0d0311666834aca4
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format-sql: true
 eureka:
   client:
     serviceUrl:
