@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: moviebox-movie-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: https://moviebox-eureka-service.herokuapp.com/eureka
+  instance:
+    preferIpAddress: true
