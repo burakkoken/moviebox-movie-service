@@ -25,6 +25,9 @@ public class Genre {
     @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
     private Set<Movie> movies = new HashSet<>();
 
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
+    private Set<TvSeries> tvSeries = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -47,6 +50,14 @@ public class Genre {
 
     public void setMovies(Set<Movie> movies) {
         this.movies = movies;
+    }
+
+    public Set<TvSeries> getTvSeries() {
+        return tvSeries;
+    }
+
+    public void setTvSeries(Set<TvSeries> tvSeries) {
+        this.tvSeries = tvSeries;
     }
 
     @Override

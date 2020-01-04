@@ -1,49 +1,45 @@
 package org.codnect.moviebox.model;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 /**
- * Created by Burak Köken on 2.1.2020.
+ * Created by Burak Köken on 3.1.2020.
  */
 @Entity
-@Table(name = "Movies")
-public class Movie {
+@Table(name = "TvSeries")
+public class TvSeries {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "movie_title")
-    private String title;
+    @Column(name = "tv_series_name")
+    private String name;
 
     @Lob
-    @Column(name = "movie_overview")
+    @Column(name = "tv_series_overview")
     private String overview;
-
-    @Column(name = "movie_runtime")
-    private Integer runtime;
-
-    @Column(name = "movie_imdb")
-    private Double imdb;
-
-    @Column(name = "movie_release_date")
-    @Temporal(TemporalType.DATE)
-    private Date releaseDate;
 
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     @JoinTable(
-            name = "Movie_Genre",
-            joinColumns = { @JoinColumn(name = "movie_id") },
+            name = "TvSeries_Genre",
+            joinColumns = { @JoinColumn(name = "tv_series_id") },
             inverseJoinColumns = { @JoinColumn(name = "genre_id") }
     )
     private Set<Genre> genres = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "tvSeries",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Season> seasons;
 
     public Long getId() {
         return id;
@@ -53,12 +49,12 @@ public class Movie {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getOverview() {
@@ -69,30 +65,6 @@ public class Movie {
         this.overview = overview;
     }
 
-    public Integer getRuntime() {
-        return runtime;
-    }
-
-    public void setRuntime(Integer runtime) {
-        this.runtime = runtime;
-    }
-
-    public Double getImdb() {
-        return imdb;
-    }
-
-    public void setImdb(Double imdb) {
-        this.imdb = imdb;
-    }
-
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
     public Set<Genre> getGenres() {
         return genres;
     }
@@ -101,17 +73,34 @@ public class Movie {
         this.genres = genres;
     }
 
+    public Set<Season> getSeasons() {
+        return seasons;
+    }
+
+    public void setSeasons(Set<Season> seasons) {
+        this.seasons = seasons;
+    }
+
     public void addGenre(Genre genre) {
         genres.add(genre);
-        genre.getMovies().add(this);
+        genre.getTvSeries().add(this);
     }
 
     public void removeGenre(Genre genre) {
         genres.remove(genre);
-        genre.getMovies().remove(this);
+        genre.getTvSeries().remove(this);
     }
 
-    @Override
+    public void addSeason(Season season) {
+        seasons.add(season);
+        season.setTvSeries(this);
+    }
+
+    public void removeSeason(Season season) {
+        seasons.remove(season);
+        season.setTvSeries(null);
+    }
+
     public boolean equals(Object obj) {
         if(this == obj) {
             return true;
@@ -119,11 +108,11 @@ public class Movie {
         if(obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        Movie movie = (Movie) obj;
-        if(movie.id == null || id == null) {
+        TvSeries tvSeries = (TvSeries) obj;
+        if(tvSeries.id == null || id == null) {
             return false;
         }
-        return Objects.equals(id, movie.id);
+        return Objects.equals(id, tvSeries.id);
     }
 
     @Override
