@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by Burak Köken on 3.1.2020.
@@ -15,12 +15,12 @@ import java.util.Set;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query("select m from Movie m left join fetch m.genres")
-    Set<Movie> findAllMovies(Pageable pageable);
+    List<Movie> findAllMovies(Pageable pageable);
 
     @Query("select m from Movie m left join fetch m.genres g where g.id = ?1")
-    Set<Movie> findMoviesByGenre(Pageable pageable, Long genreId);
+    List<Movie> findMoviesByGenre(Pageable pageable, Long genreId);
 
     @Query("select m from Movie m left join fetch m.genres g where m.imdb <= ?1 and m.imdb >= ?2")
-    Set<Movie> findMoviesByImdbLessThanEqualAndImdbGreaterThanEqual(Pageable pageable, Double imdbLess, Double imdbGreater);
+    List<Movie> findMoviesByImdbLessThanEqualAndImdbGreaterThanEqual(Pageable pageable, Double imdbLess, Double imdbGreater);
 
 }

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by Burak Köken on 5.1.2020.
@@ -15,9 +15,9 @@ import java.util.Set;
 public interface TvSeriesRepository extends JpaRepository<TvSeries, Long> {
 
     @Query("select t from TvSeries t left join fetch t.genres")
-    Set<TvSeries> findAllTvSeries(Pageable pageable);
+    List<TvSeries> findAllTvSeries(Pageable pageable);
 
     @Query("select t from TvSeries T left join fetch t.genres g where g.id = ?1")
-    Set<TvSeries> findTvSeriesByGenre(Pageable pageable, Long genreId);
+    List<TvSeries> findTvSeriesByGenre(Pageable pageable, Long genreId);
 
 }
