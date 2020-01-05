@@ -1,6 +1,8 @@
 package org.codnect.moviebox.mapper;
 
+import org.codnect.moviebox.dto.CreateGenreDTO;
 import org.codnect.moviebox.dto.GenreDTO;
+import org.codnect.moviebox.dto.UpdateGenreDTO;
 import org.codnect.moviebox.model.Genre;
 import org.mapstruct.Mapper;
 
@@ -16,5 +18,9 @@ public interface GenreMapper {
     List<GenreDTO> toGenreDTOList(List<Genre> genres);
 
     List<Genre> toGenreList(List<GenreDTO> genreDTOList);
+
+    Genre toGenre(CreateGenreDTO genreDTO);
+
+    Genre toGenre(UpdateGenreDTO genreDTO);
 
 }
