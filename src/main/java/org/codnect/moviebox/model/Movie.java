@@ -1,5 +1,7 @@
 package org.codnect.moviebox.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -21,6 +23,7 @@ public class Movie {
     private String title;
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "movie_overview")
     private String overview;
 
