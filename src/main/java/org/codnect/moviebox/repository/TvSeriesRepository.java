@@ -17,7 +17,7 @@ public interface TvSeriesRepository extends JpaRepository<TvSeries, Long> {
     @Query("select t from TvSeries t left join fetch t.genres")
     List<TvSeries> findAllTvSeries(Pageable pageable);
 
-    @Query("select t from TvSeries T left join fetch t.genres g where g.id = ?1")
+    @Query("select t from TvSeries t left join fetch t.genres g where g.id = ?1")
     List<TvSeries> findTvSeriesByGenre(Pageable pageable, Long genreId);
 
 }
